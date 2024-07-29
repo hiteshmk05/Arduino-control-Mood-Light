@@ -1,0 +1,30 @@
+int red=0;
+int green=0;
+int blue=0;
+
+int to_dec(String hex_code)
+{
+    return strtol(hex_code.c_str(),NULL,16);
+}
+void setup() {
+    Serial.begin(9600);
+    pinMode(9,OUTPUT);
+    pinMode(10,OUTPUT);
+    pinMode(11,OUTPUT);
+}
+
+void loop() {
+    while(Serial.available()>0)
+    {
+        String color_code = Serial.readString();
+        Serial.print(color_code);
+        red = to_dec(color_code.substring(0,2));
+        green = to_dec(color_code.substring(2,4));
+        blue = to_dec(color_code.substring(4,6));
+
+        analogWrite(9,green);
+        analogWrite(10,red);
+        analogWrite(11,blue);
+        delay(500);
+    }
+}
